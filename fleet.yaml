@@ -9,9 +9,8 @@ helm:
     expose:
       type: nodePort
       tls:
-        secretName: "harbor-nginx"
-        auto:
-          commonName: "harbor.rancher.159.89.86.59.sslip.io"
+        enabled:
+          false
       nodePort:
         name: harbor
         ports:
