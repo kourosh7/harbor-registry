@@ -1,5 +1,5 @@
 targetCustomizations:
-#- name: test
+- name: test
 #  clusterSelector:
 #    matchLabels:
   defaultNamespace: harbor-registry
