@@ -1,0 +1,123 @@
+targetCustomizations:
+#- name: test
+#  clusterSelector:
+#    matchLabels:
+  defaultNamespace: harbor-registry
+  helm: 
+    releaseName: harbor
+    maxHistory: 1
+    repo: https://helm.goharbor.io
+    chart: harbor
+    version: 1.12.0
+    values:
+      expose:
+        type: nodePort
+        tls:
+          secretName: "harbor-nginx"
+          auto:
+            commonName: "harbor.rancher.159.89.86.59.sslip.io"
+        nodePort:
+          name: harbor
+          ports:
+            http:
+              port: 80
+              nodePort: 30012
+            https:
+              port: 443
+              nodePort: 30013
+            notary:
+              port: 4443
+              nodePort: 30014
+      externalURL: https://harbor.rancher.159.89.86.59.sslip.io
+      persistence:
+        persistentVolumeClaim:
+          registry:
+            #existingClaim: "harbor-registry"
+            storageClass: longhorn
+            size: 10Gi
+          chartmuseum:
+            #existingClaim: "harbor-chartmuseum"
+            storageClass: longhorn
+            size: 5Gi
+          jobservice:
+            #existingClaim: "harbor-jobservice"
+            storageClass: longhorn
+            size: 1Gi
+          database:
+            #existingClaim: "database-data-harbor-database-0"
+            storageClass: longhorn
+            size: 2Gi
+          redis:
+            #existingClaim: "data-harbor-redis-0"
+            storageClass: longhorn
+            size: 1Gi
+          trivy:
+            #existingClaim: "data-harbor-trivy-0"
+            storageClass: longhorn
+            size: 5Gi
+      nginx:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+            cpu: 100m
+      portal:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+            cpu: 100m
+      core:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+            cpu: 100m
+      jobservice:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+            cpu: 100m
+      registry:
+        registry:
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 256Mi
+              cpu: 100m
+        controller:
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 256Mi
+              cpu: 100m
+      chartmuseum:
+        resources:
+          limits:
+            memory: 256Mi
+          requests:
+            memory: 256Mi
+            cpu: 100m
+      notary:
+        server:
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 256Mi
+              cpu: 100m
+        signer:
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 256Mi
+              cpu: 100m
+
